@@ -1,0 +1,145 @@
+﻿#include<iostream>
+using namespace std;
+struct bnode
+{
+	char data;
+	struct bnode *left,*right;
+};
+
+class general
+{
+	bnode *root;
+public:
+	general()
+{
+		root=NULL;
+}
+
+void inser()
+{
+  	int chap,sec,subsec;
+  	char p;
+  	bnode *cnode,*snode,*par,*spar;
+	cout<<"Enter book Name="<<endl;
+	cin>>p;
+	cnode = new bnode;
+	cnode->data=p;
+	cnode->right=NULL;
+	cnode->left=NULL;
+	root=cnode;
+	cout<<"Enter Number of Chapter?";
+	cin>>chap;
+	par=cnode;
+
+	for(int i=0;i<chap;i++)
+	{
+		cout<<"Enter name of chapter=";
+    		cin>>p;
+    		cnode = new bnode;
+    		cnode->data=p;
+    		cnode->left=NULL;
+    		cnode->right=NULL;
+    
+		if(i==0)
+    		{
+    			par->left=cnode;
+    		}
+    		else
+    		{
+    			par->right=cnode;
+    		}
+    			spar=cnode;
+    		cout<<"Enter how many section you want to insert=";
+    		cin>>sec;
+    
+		for(int j=0;j<sec;j++)
+    		{
+    			cout<<"Enter name of section=";
+    			cin>>p;
+    			snode = new bnode;
+    			snode->data=p;
+    			snode->left=NULL;
+    			snode->right=NULL;
+    			
+			if(j==0)
+    			{
+    				spar->left=snode;
+    			}
+    			else
+    			{
+    				spar->right=snode;
+    			}
+    				spar=snode;
+    		}
+    				par=cnode;
+    	}
+}
+
+void displaytree()
+{
+	struct bnode *q[20];
+	struct bnode *ptr;
+	int front =-1,rear=-1;
+	front++;
+	rear++;
+	q[rear]=root;
+	q[++rear]=NULL;
+	while(front<=rear)
+	{
+		ptr=q[front++];
+    		if(ptr==NULL)
+        		cout<<endl;
+    		if(ptr!=NULL)
+    		{
+        			cout<<" "<<ptr->data;
+        			do
+        			{
+        				if(ptr->left!=NULL)
+        				{
+        					q[++rear]=ptr->left;
+        				}
+        				if(ptr->right!=NULL)
+        				{
+            				ptr=ptr->right;
+            				cout<<" "<<ptr->data;
+
+            			if(ptr->left!=NULL && ptr->right==NULL)
+            			{
+            				q[++rear]=ptr->left;
+            			}
+        		}
+        			}while(ptr->right!=NULL);
+        			q[++rear]=NULL;
+
+    		}
+	}
+}
+};
+
+int main()
+{
+	general g1;
+	char ch;
+	int ch1;
+	do
+	{
+		cout<<"\nMenu";
+		cout<<"\n1.Create General Tree";
+		cout<<"\n2.Display Tree";
+		cout<<"\nENter the choice=";
+		cin>>ch1;
+		switch(ch1)
+		{
+		case 1:
+			g1.inser();
+			break;
+		case 2:
+			g1.displaytree();
+			break;
+		}
+		cout<<"\nDo you want to continue=";
+		cin>>ch;
+	}while(ch=='y'||ch=='Y');
+	return 0;
+}
+
